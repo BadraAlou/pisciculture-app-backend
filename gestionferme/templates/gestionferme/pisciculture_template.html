@@ -1,0 +1,34 @@
+<!-- pisciculture_template.html -->
+<html>
+<head>
+    <style>
+        /* Ajoutez du CSS pour le style du PDF */
+        body { font-family: Arial, sans-serif; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Cycle de Production : {{ cycle.nom }}</h1>
+    <p>Date : {{ cycle.date }}</p>
+    <h2>Infrastructures</h2>
+    <table>
+        <tr>
+            <th>Numéro</th>
+            <th>Type</th>
+            <th>Superficie</th>
+            <th>Volume</th>
+        </tr>
+        {% for infra in infrastructures %}
+        <tr>
+            <td>{{ infra.numero }}</td>
+            <td>{{ infra.typeInfrastructure.nom }}</td>
+            <td>{{ infra.superficie }}</td>
+            <td>{{ infra.volume }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

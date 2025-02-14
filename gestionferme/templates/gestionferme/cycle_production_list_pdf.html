@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Cycles de Production</title>
+
+    <style>
+        /* Ajoutez du CSS pour le style du PDF */
+        body { font-family: Arial, sans-serif; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Liste des Cycles de Production</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Nom</th>
+                <th>Ferme</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cycle in cycles %}
+                <tr>
+                    <td>{{ cycle.date }}</td>
+                    <td>{{ cycle.nom }}</td>
+                    <td>{{ cycle.ferme }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

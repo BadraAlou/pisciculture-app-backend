@@ -1,0 +1,30 @@
+<!-- templates/admin/custom_dashboard.html -->
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>Tableau de bord personnalisé</h1>
+<div>
+    <p>Total utilisateurs : {{ stats.total_users }}</p>
+    <p>Total commandes : {{ stats.total_orders }}</p>
+    <p>Tâches en attente : {{ stats.pending_tasks }}</p>
+</div>
+
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar'],
+            datasets: [{
+                label: 'Commandes',
+                {% comment %} data: [12, 19, 3], {% endcomment %}
+                data: [{{ stats.total_users }}, {{ stats.total_orders }}, {{ stats.pending_tasks }}],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+{% endblock %}

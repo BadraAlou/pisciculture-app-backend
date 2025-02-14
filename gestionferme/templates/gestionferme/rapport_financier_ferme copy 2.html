@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport Financier</title>
+<style>
+
+    @page {
+        //size: A4; /* Change from the default size of A4 */
+        size: A4 landscape; /* can use also 'portrait' for orientation */
+        margin: 0mm; /* Set margin on each page */
+        
+      }
+    
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        width: 100%;
+        //max-width: 900px;
+        margin: auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .header, .table-section, .footer {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .header {
+        /* background-color: #FFCC66; */
+        background-color: #FFFFE0;
+        color: #333;
+    }
+    .header .row, .table-section .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .header .row div, .table-section .row div {
+        flex: 1 1 45%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    .header h2 {
+        text-align: center;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .table th {
+        background-color: #E0ECF8;
+    }
+    .highlighted {
+        background-color: #FFFFE0;
+    }
+    .table-section h3 {
+        text-align: center;
+        color: #333;
+    }
+    @media (max-width: 768px) {
+        .header .row div, .table-section .row div {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Rapport Financier d'une Ferme</h2>
+        <div class="row">
+            <div>Nom de la Ferme : {{ cycle.ferme.nom }}</div>
+            <div>Nom et Prénom du Promoteur : {{ cycle.ferme.pisciculteur }}</div>
+            <div>Pays : {{ cycle.ferme.zone.pays }}</div>
+            <div>Numéro de tél : {{ cycle.ferme.pisciculteur.telephone }}</div>
+            <div>Région : {{ cycle.ferme.zone.region }}</div>
+            <div>Email : {{ cycle.ferme.pisciculteur.telephone }}</div>
+            <div>Cercle : {{ cycle.ferme.zone.cercle }}</div>
+            <div>Commune : Finkolo AC</div>
+            <div>Village/Ville/Quartier : {{ cycle.ferme.zone.ville }}</div>
+            <div>Coopérative de Pisciculteurs : ??????</div>
+            <div>Coord. NORD : </div>
+            <div>Coord. OUEST : </div>
+        </div>
+    </div>
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <!-- <tr class="highlighted">
+                <th colspan="4">Type Infrastructure</th>
+            </tr> -->
+
+            <colgroup>
+                <col style="width: 20%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 20%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <tr class="highlighted">
+                <th colspan="8">Couvrant la Période du {{ cycle.date }} au {{ cycle.date_fin }}</th>
+                
+            </tr>
+
+
+
+            <tr>
+                <td colspan="2" class="sub-header"></td>
+                <td class="row-label">Bassin en ciment</td>
+                <td class="row-label">Etang en terre</td>
+                <td class="row-label">Bac hors sol</td>
+                <td class="row-label">Cage Rectangulaire</td>
+                <td class="row-label">Cage Circulaire</td>
+                <td class="row-label"></td>
+                
+            </tr>
+            <tr>
+                <td colspan="2" class="">Nombre total</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="">Superficie total en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="row-label">Volume total en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+           
+
+            <tr>
+                <td rowspan="3" class="">Infrastructure en cours de cycle</td>
+                <td class="">Nombre total</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td class="">Superficie totale en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td class="">Volume total en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+
+            <tr>
+                <td rowspan="3" class="">Infrastructures ayant bouclé un cycle pendant la période couverte</td>
+                <td class="">Nombre total</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td class="">Superficie totale en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            <tr>
+                <td class="">Volume total en eau</td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+                <td class=""></td>
+            </tr>
+
+            
+            
+        </table>
+    </div>
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <tr class="highlighted">
+                <th colspan="3">Charges</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            
+
+            <colgroup>
+                <col style="width: 15%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 15%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <!-- Alevins -->
+
+            <!--
+            <tr>
+                <td colspan="8" class="highlighted sub-header">Alevins</td>
+            </tr>
+             -->
+
+            <tr>
+                <td rowspan="6" class="sub-header">Alevins utilisés</td>
+                <td rowspan="2" class="row-label">Tilapia</td>
+                <td class="row-label">Nombre Total</td>
+                <td class="row-label">{{ totalAlevin.tilapia_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.tilapia_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.tilapia_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.tilapia_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.tilapia_cage_circulaire }}</td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Côut Total : {{ totalAlevin.data.tilapia.bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.cout_tilapia_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.cout_tilapia_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.cout_tilapia_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.cout_tilapia_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.cout_tilapia_cage_circulaire }}</td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Clarias</td>
+                <td class="row-label">Nombre Total</td>
+                <td class="row-label">{{ totalAlevin.claria_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.claria_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.claria_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.claria_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.claria_cage_circulaire }}</td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td class="row-label">Côut Total</td>
+                <td class="row-label">{{ totalAlevin.cout_claria_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.cout_claria_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.cout_claria_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.cout_claria_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.cout_claria_cage_circulaire }}</td>
+                <td class="row-label"></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Autres</td>
+                <td class="row-label">Nombre Total</td>
+                <td class="row-label">{{ totalAlevin.autres_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.autres_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.autres_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.autres_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.autres_cage_circulaire }}</td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label">{{ totalAlevin.cout_autres_bassin_en_ciment }}</td>
+                <td class="row-label">{{ totalAlevin.cout_autres_etang_en_terre }}</td>
+                <td class="row-label">{{ totalAlevin.cout_autres_bac_hors_sol }}</td>
+                <td class="row-label">{{ totalAlevin.cout_autres_cage_rectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.cout_autres_cage_circulaire }}</td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" colspan="2" class="row-label">Total des alevins achetés</td>
+                <td class="row-label"> <b>Nombre Total</b></td>
+                <td class="row-label">{{ totalAlevin.totalBassinCiment }}</td>
+                <td class="row-label">{{ totalAlevin.totalEtangTerre }}</td>
+                <td class="row-label">{{ totalAlevin.totalBacHorsSol }}</td>
+                <td class="row-label">{{ totalAlevin.totalCageRectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.totalCageCirculaire }}</td>
+                <td class="row-label">{{ totalAlevin.totalNombreAlevins }}</td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label"><b>Côut Total</b></td>
+                <td class="row-label">{{ totalAlevin.coutTotalBassinCiment }}</td>
+                <td class="row-label">{{ totalAlevin.coutTotalEtangTerre }}</td>
+                <td class="row-label">{{ totalAlevin.coutTotalBacHorsSol }}</td>
+                <td class="row-label">{{ totalAlevin.coutTotalCageRectangulaire }}</td>
+                <td class="row-label">{{ totalAlevin.coutTotalCageCirculaire }}</td>
+                <td class="row-label">{{ totalAlevin.totalCoutAlevins }}</td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="8"></td>
+            </tr>
+
+            <!-- Aliments -->
+
+            <tr>
+                <td rowspan="10" class="sub-header">Quantité totale d'aliment utilisé</td>
+                <td rowspan="2" class="row-label">Aliment 1</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Aliment 2</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Aliment 3</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Aliment 4</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Aliment 5</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" colspan="2" class="row-label">Total des aliments achetés</td>
+                <td class="row-label"> <b>Quantité Total</b></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label"><b>Côut Total</b></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="8"></td>
+            </tr>
+
+            <!-- Produit -->
+
+            <tr>
+                <td rowspan="6" class="sub-header">Traitements sanitaires effectués</td>
+                <td rowspan="2" class="row-label">Produit 1</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Produit 2</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Produit 3</td>
+                <td class="row-label">Quantité Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Côut Total</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="3" class="row-label"><b>Coût total des Traitements</b></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="3" class="row-label">
+                    <b>Autres charges</b> 
+                        <span style="color: red;">(incluant l'eau la main d'œuvre et les amortissements dont la répartition par type d'infrastructure n'est pas aisée) </span>
+                    
+                </td>
+                <td colspan="5" class="row-label"></td>
+                <td colspan="5" class="row-label"></td>
+            </tr>
+            
+            <tr>
+                <td colspan="3" class="row-label">
+                    <b>TOTAL CHARGES </b>
+                </td>
+                <td colspan="5" class="row-label"></td>
+                <td colspan="5" class="row-label"></td>
+            </tr>
+            
+        </table>
+    </div>
+
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <tr class="highlighted">
+                <th colspan="3">LES REVENUS</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            
+
+            <colgroup>
+                <col style="width: 15%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 15%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 10%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 10%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <!-- Alevins -->
+
+            <!--
+            <tr>
+                <td colspan="8" class="highlighted sub-header">Alevins</td>
+            </tr>
+             -->
+
+            <tr>
+                <td rowspan="3" colspan="2" class="sub-header">Quantité totale de poisson produit</td>
+                <td class="row-label">Tilapia</td>
+                
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td  class="row-label">Clarias</td>
+                
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Autre</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+
+            <!-- Ventes -->
+
+            <tr>
+                <td rowspan="6" class="sub-header">Les ventes</td>
+                <td rowspan="2" class="row-label">Tilapia</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Recette Totales</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Clarias</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Recette Totales</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Autres</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Recette Totales</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+
+            <!-- Dons -->
+
+            <tr>
+                <td rowspan="6" class="sub-header">Dons</td>
+                <td rowspan="2" class="row-label">Tilapia</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Clarias</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Autres</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+
+            <!-- Autoconsommation -->
+
+            <tr>
+                <td rowspan="6" class="sub-header">Autoconsommation</td>
+                <td rowspan="2" class="row-label">Tilapia</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            
+            
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Clarias</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="row-label">Autres</td>
+                <td class="row-label">Quantité Totale</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                
+                <td class="row-label">Estimation</td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="3" class="sub-header">TOTAL DES REVENUS</td>
+            
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                <td class="row-label"></td>
+                
+            </tr>
+
+            <tr>
+                <td colspan="3" class="sub-header">Chiffre d'affaire estimé</td>
+            
+                <td colspan="6" class="row-label"></td>
+                
+                
+            </tr>
+
+            <tr>
+                <td colspan="3" class="sub-header" style="color: red;">Bénéfice Réalisé</td>
+            
+                <td colspan="6" class="row-label"></td>
+                
+            </tr>
+            
+            
+        </table>
+    </div>
+
+
+</div>
+
+</body>
+</html>

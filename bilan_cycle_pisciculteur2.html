@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilan Financier</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .header, .table-section, .footer {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .header {
+        /* background-color: #FFCC66; */
+        background-color: #FFFFE0;
+        color: #333;
+    }
+    .header .row, .table-section .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .header .row div, .table-section .row div {
+        flex: 1 1 45%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    .header h2 {
+        text-align: center;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .table th {
+        background-color: #E0ECF8;
+    }
+    .highlighted {
+        background-color: #FFFFE0;
+    }
+    .table-section h3 {
+        text-align: center;
+        color: #333;
+    }
+    @media (max-width: 768px) {
+        .header .row div, .table-section .row div {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Bilan financier d'un cycle dans une infrastructure</h2>
+        <div class="row">
+            <div>Nom de la Ferme : Ferme Sabati</div>
+            <div>Nom et Prénom du Promoteur : Moussa Konaté</div>
+            <div>Pays : Mali</div>
+            <div>Numéro de tél : 7788975</div>
+            <div>Région : Sikasso</div>
+            <div>Email : moussa@konate.com</div>
+            <div>Cercle : Sikasso</div>
+            <div>Commune : Finkolo AC</div>
+            <div>Village/Ville/Quartier : Ziékorodougou</div>
+            <div>Coopérative de Pisciculteurs : ??????</div>
+            <div>Coord. NORD : </div>
+            <div>Coord. OUEST : </div>
+        </div>
+    </div>
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <!-- <tr class="highlighted">
+                <th colspan="4">Type Infrastructure</th>
+            </tr> -->
+
+            <colgroup>
+                <col style="width: 20%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 30%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 30%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <tr>
+                <td rowspan="4" class="sub-header">Type infrastructure</td>
+                <td class="row-label">bassin ou étang ou bac ou cage</td>
+                <td>Bassin</td>
+            </tr>
+            <tr>
+                <td class="row-label">Numéro</td>
+                <td>Bassin1 </td>
+            </tr>
+            <tr>
+                <td class="row-label">superficie (en m²)</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td class="row-label">volume (en m³)</td>
+                <td>10</td>
+            </tr>
+
+            
+            
+        </table>
+    </div>
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <tr class="highlighted">
+                <th colspan="2">Charges</th>
+                <th>Tilapia</th>
+                <th>Clarias</th>
+                <th>Autres</th>
+            </tr>
+            
+
+            <colgroup>
+                <col style="width: 20%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 26%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <!-- Alevins -->
+
+            <tr>
+                <td colspan="5" class="highlighted sub-header">Alevins</td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="3" class="sub-header">Achats d'alevins</td>
+                <td class="row-label">Nombre total d'alevins</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Prix de revient d'un alevin</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Cout Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <!-- Aliments -->
+            <tr>
+                <td colspan="5" class="highlighted sub-header">Aliment</td>
+            
+            </tr>
+
+            <tr>
+                <td rowspan="6" class="sub-header">Achats d'aliments</td>
+                <td class="row-label">Aliment 1</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Aliment 2</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Aliment 3</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            <tr>
+                <td class="row-label">Aliment 4</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Aliment 5</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Côut Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <!-- Traitements Sanitaire  -->
+            <tr>
+                <td colspan="5" class="highlighted sub-header">Traitements sanitaires</td>
+                
+            </tr>
+
+            <tr>
+                <td rowspan="3" class="sub-header">Traitement 1</td>
+                <td class="row-label">Date</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Produit(s) utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Prix produits utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="3" class="sub-header">Traitement 2</td>
+                <td class="row-label">Date</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Produit(s) utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Prix produits utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="3" class="sub-header">Traitement 2</td>
+                <td class="row-label">Date</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Produit(s) utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Prix produits utilisés</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">Côut total des traitements</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">Eau</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">Main d'oeuvre</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">Amortissements</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr class="highlighted">
+                <td class="row-label" colspan="2">TOTAL CHARGES</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            
+        </table>
+    </div>
+
+    <!-- Recettes -->
+
+    <div class="table-section2">
+        <!-- <h3>Super</h3> -->
+        <table class="table">
+            <tr class="highlighted">
+                <th colspan="5">Recettes</th>
+                <!-- <th>Tilapia</th>
+                <th>Clarias</th>
+                <th>Autres</th> -->
+            </tr>
+            
+
+            <colgroup>
+                <col style="width: 20%;"> <!-- Colonne 1 : Type infrastructure -->
+                <col style="width: 26%;"> <!-- Colonne 2 : Libellés -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+                <col style="width: 18%;"> <!-- Colonne 3 : Valeurs -->
+            </colgroup>
+
+            <!-- Alevins -->
+
+            
+
+            <tr>
+                <td class="row-label" colspan="2">Quantité totale de poisson produit (en Kg)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">Prix de revient du Kg de poisson produit</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td class="row-label" colspan="2">prix de vente du Kg de poisson</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="sub-header">Ventes</td>
+                <td class="row-label">Quantité Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Recettes</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="sub-header">Dons</td>
+                <td class="row-label">Quantité Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Recettes</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td rowspan="2" class="sub-header">Auto Consommations</td>
+                <td class="row-label">Quantité Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="row-label">Recettes</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            
+            <tr class="highlighted">
+                <td class="row-label" colspan="2">TOTAL DES RECETTES</td>
+                <td colspan="3"></td>
+            </tr>
+            
+            <tr></tr>
+            
+            <tr class="highlighted">
+                <td class="row-label" colspan="2">TOTAL DES INTERETS</td>
+                <td colspan="3"></td>
+            </tr>
+
+            <tr class="highlighted">
+                <td class="row-label" colspan="2">RENTABILITE DES INVESTISSEMENTS (en %)</td>
+                <td colspan="3"></td>
+            </tr>
+
+            
+            
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

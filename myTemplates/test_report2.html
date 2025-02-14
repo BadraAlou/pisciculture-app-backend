@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan Financier - Ferme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .table-container {
+            width: 600px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .table-container h2 {
+            background-color: #ffff99;
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .section-title {
+            background-color: #cce5ff;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px;
+            font-size: 1em;
+        }
+        .total, .gain {
+            background-color: #d9ead3;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            font-size: 1em;
+        }
+        .table-row {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        .cell {
+            flex: 1;
+            padding: 8px;
+            border-right: 1px solid #ccc;
+            text-align: left;
+        }
+        .cell:last-child {
+            border-right: none;
+        }
+        .value-cell {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <h2>BILAN FINANCIER</h2>
+
+        <!-- Infrastructure et Détails -->
+        <div class="table-row">
+            <div class="cell">Infrastructure (à choisir)</div>
+            <div class="cell value-cell">5</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Superficie (en m2) ou Volume en m3</div>
+            <div class="cell value-cell">100</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Date de mise en charge</div>
+            <div class="cell value-cell">31-Dec-99</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Nombre total d'alevins</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Tilapia</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Clarias</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Autre</div>
+            <div class="cell value-cell">-</div>
+        </div>
+
+        <!-- Charges Section -->
+        <div class="section-title">CHARGES</div>
+        <div class="table-row">
+            <div class="cell">Achat d'alevins</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Tilapia</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Clarias</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Autre</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Achat d'aliment</div>
+            <div class="cell value-cell">18,320</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Aliment1</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Aliment2</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Skretting 1,2mm</div>
+            <div class="cell value-cell">18,320</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Skretting 1,8mm</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Skretting 2mm</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Traitement</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Eau</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Main d'œuvre</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Amortissements</div>
+            <div class="cell value-cell">18,320</div>
+        </div>
+        <div class="table-row total">
+            <div class="cell">TOTAL CHARGES</div>
+            <div class="cell value-cell">18,320</div>
+        </div>
+
+        <!-- Quantité de Poisson Produit -->
+        <div class="table-row">
+            <div class="cell">QUANTITE DE POISSON PRODUIT (en Kg)</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Prix de revient du Kg de poisson produit</div>
+            <div class="cell value-cell">-</div>
+        </div>
+
+        <!-- Revenus Estimés Section -->
+        <div class="section-title">REVENUS ESTIMES</div>
+        <div class="table-row">
+            <div class="cell">prix de vente du Kg</div>
+            <div class="cell value-cell">1,750</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Ventes (F CFA)</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Dons (estimation en F CFA)</div>
+            <div class="cell value-cell">-</div>
+        </div>
+        <div class="table-row">
+            <div class="cell">Auto consommation (estimation en F CFA)</div>
+            <div class="cell value-cell">-</div>
+        </div>
+
+        <!-- Gain sur 1 Kg de Poisson -->
+        <div class="table-row gain">
+            <div class="cell">gain sur 1 Kg de poisson (en F CFA)</div>
+            <div class="cell value-cell">1,750</div>
+        </div>
+    </div>
+</body>
+</html>
