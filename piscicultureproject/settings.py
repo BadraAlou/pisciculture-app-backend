@@ -32,7 +32,7 @@ DEBUG = config('DEBUG')
 
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["31.207.34.42", 'localhost']
+ALLOWED_HOSTS = ['31.207.34.42', 'localhost']
 
 
 # Application definition
@@ -87,7 +87,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'piscicultureproject.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
