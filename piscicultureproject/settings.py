@@ -32,7 +32,7 @@ DEBUG = config('DEBUG')
 
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['31.207.34.42', 'localhost']
+ALLOWED_HOSTS = ["31.207.34.42", 'localhost']
 
 
 # Application definition
