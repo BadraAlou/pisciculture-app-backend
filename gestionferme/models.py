@@ -212,17 +212,35 @@ class AlevinsCycle:
 class RecolteCycle:
     def __init__(self, data=None):
         # Initialisation dynamique via un dictionnaire
-        self.infrastructures = {'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
-                        'cage_rectangulaire': 0, 'cage_circulaire': 0}
+        # infrastructures = {'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+        #                 'cage_rectangulaire': 0, 'cage_circulaire': 0}
         
         self.cycle = {
-                'tilapia': self.infrastructures,
-                'claria': self.infrastructures,
-                'autres': self.infrastructures,
+                'tilapia': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
+                'claria': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
+                'autres': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
                 'couts': {
-                    'tilapia': self.infrastructures,
-                    'claria': self.infrastructures,
-                    'autres': self.infrastructures
+                    'tilapia': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
+                    'claria': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
+                    'autres': {
+                        'bassin_en_ciment': 0, 'etang_en_terre': 0, 'bac_hors_sol': 0, 
+                        'cage_rectangulaire': 0, 'cage_circulaire': 0
+                    },
                 }, 
         }
 
@@ -248,7 +266,7 @@ class RecolteCycle:
 
         self.cout_total = 0
         self.nb_total = 0 
-
+ 
     
     def calculer_totaux(self):
         self.nb_bassin_ciment = self.nombre_total_infrastructure('bassin_en_ciment')
@@ -268,21 +286,44 @@ class RecolteCycle:
 
 
     def nombre_total_infrastructure(self, infrastructure_type):
-        return sum(self.data.get(fish_type, {}).get(infrastructure_type, 0)
-                   for fish_type in ['tilapia', 'claria', 'autres'])
+        total = 0
+        for categorie in ['vente', 'don', 'autoConsommation']:
+            for fish_type in ['tilapia', 'claria', 'autres']:
+                total += self.data[categorie].get(fish_type, {}).get(infrastructure_type, 0)
+        return total
 
     def cout_total_infrastructure(self, infrastructure_type):
         """Calcule le coût total d'achat pour une infrastructure donnée."""
-        return sum(self.data['couts'].get(fish_type, {}).get(infrastructure_type, 0)
-                   for fish_type in ['tilapia', 'claria', 'autres'])    
+        total = 0
+        for categorie in ['vente', 'don', 'autoConsommation']:
+            for fish_type in ['tilapia', 'claria', 'autres']:
+                total += self.data[categorie]['couts'].get(fish_type, {}).get(infrastructure_type, 0)
+        return total    
 
     def total_type(self, fish_type):
         """Calcule le total pour un type donné (tilapia, claria, autres)."""
-        return sum(self.data[fish_type].values())
+        return sum(self.data['vente'][fish_type].values())
     
     def total_cout_type(self, fish_type):
         """Calcule le total des coûts pour un type donné."""
-        return sum(self.data['couts'][fish_type].values())
+        return sum(self.data['vente']['couts'][fish_type].values())
+    
+    def total_type_don(self, fish_type):
+        """Calcule le total pour un type donné (tilapia, claria, autres)."""
+        return sum(self.data['don'][fish_type].values())
+    
+    def total_cout_type_don(self, fish_type):
+        """Calcule le total des coûts pour un type donné."""
+        return sum(self.data['don']['couts'][fish_type].values())
+    
+    def total_type_autoconsommation(self, fish_type):
+        """Calcule le total pour un type donné (tilapia, claria, autres)."""
+        return sum(self.data['autoConsommation'][fish_type].values())
+    
+    def total_cout_type_autoconsommation(self, fish_type):
+        """Calcule le total des coûts pour un type donné."""
+        return sum(self.data['autoConsommation']['couts'][fish_type].values())
+    
     
     def total_general(self):
         """Calcule le total général de tous les alevins."""
@@ -638,8 +679,10 @@ class CycleProduction(models.Model):
                         elt = f"poidsTotalVente{poisson.capitalize()}s"
                     else:
                         elt = f"poidsTotalVente{poisson.capitalize()}"
+                    #print(f'Yo Recolte Summary: {elt}')
 
                     count_value = self.get_total_recolte_by_infrastructure(elt, infrastructure)
+                    #print(f'Yo count value: {count_value}')
                     summary.data[type][poisson][infrastructure.lower().replace(' ', '_')] = count_value
 
                     # Coût associé
@@ -649,8 +692,8 @@ class CycleProduction(models.Model):
                     else:
                         elt2 = f"recette{poisson.capitalize()}"
                         
-                    cout_value = self.get_total_recolte_by_infrastructure(elt2, infrastructure)
-                    summary.data[type]['couts'][poisson][infrastructure.lower().replace(' ', '_')] = cout_value
+                    cout_value2 = self.get_total_recolte_by_infrastructure(elt2, infrastructure)
+                    summary.data[type]['couts'][poisson][infrastructure.lower().replace(' ', '_')] = cout_value2
 
         return summary    
     
@@ -817,7 +860,7 @@ class Recolte(models.Model):
     # Tilapia
     dateVenteTilapia = models.DateField(verbose_name="Tilapia - Date vente", default=datetime.today)
     poidsTotalVenteTilapia  = models.FloatField(verbose_name="Poids total vendu",default=0, blank=True)
-    recetteTilapia = models.FloatField(verbose_name="Recette",default=0, blank=True)
+    recetteTilapia = models.FloatField(verbose_name="Recette Tilapia",default=0, blank=True)
     dateDonTilapia = models.DateField(verbose_name="Date de don", default=datetime.today)
     poidsTotalDonTilapia  = models.FloatField(verbose_name="Poids total donné",default=0, blank=True)
     dateAutoConsommationTilapia = models.DateField(verbose_name="Date d'autoconsommation", default=datetime.today)
@@ -826,16 +869,16 @@ class Recolte(models.Model):
     # Clarias
     dateVenteClarias = models.DateField(verbose_name="Clarias - Date de vente", default=datetime.today)
     poidsTotalVenteClarias = models.FloatField(verbose_name="Poids total vendu",default=0, blank=True)
-    recetteClarias = models.FloatField(verbose_name="Recette",default=0, blank=True)
+    recetteClarias = models.FloatField(verbose_name="Recette Clarias",default=0, blank=True)
     dateDonClarias  = models.DateField(verbose_name="Date de don", default=datetime.today)
     poidsTotalDonClarias   = models.FloatField(verbose_name="Poids total donné",default=0, blank=True)
     dateAutoConsommationClarias  = models.DateField(verbose_name="Date d'autoconsommation", default=datetime.today)
-    poidsTotalAutoConsommationClarias   = models.FloatField(verbose_name="Poids total autoconsommation",default=0, blank=True)
+    poidsTotalAutoConsommationClarias   = models.FloatField(verbose_name="Poids total autoconsommation",default=0, blank=True) 
 
     # Autres
     dateVenteAutres = models.DateField(verbose_name="Autres - Date de vente", default=datetime.today)
     poidsTotalVenteAutres = models.FloatField(verbose_name="Poids total vendu",default=0, blank=True)
-    recetteAutres = models.FloatField(verbose_name="Recette",default=0, blank=True)
+    recetteAutres = models.FloatField(verbose_name="Recette Autres",default=0, blank=True)
     dateDonAutres = models.DateField(verbose_name="Date de don", default=datetime.today)
     poidsTotalDonAutres = models.FloatField(verbose_name="Poids total donné",default=0, blank=True)
     dateAutoConsommationAutres = models.DateField(verbose_name="Date d'autoconsommation", default=datetime.today)

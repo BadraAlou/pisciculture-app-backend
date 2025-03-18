@@ -290,10 +290,15 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
         totalAlevin = cycle.get_production_summary()
         totalRation = cycle.get_ration_journaliere_summary()
         totalRecolte = cycle.get_recolte_summary()
-        print(f'Yo total recolte : {totalRecolte}')
+        #print(f'Yo total ration : {totalRation}')
+        #print(f'Yo total recolte : {totalRecolte}')
         
         totalAlevin.calculer_totaux()
         totalRation.calculer_totaux()
+        totalRecolte.calculer_totaux()
+        # print(f"Yo Recette - nbre Tilapia : {totalRecolte['data']['vente']['tilapia']['bassin_en_ciment']}")
+        print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['tilapia']['bassin_en_ciment']}")
+        print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['couts']['tilapia']['bassin_en_ciment']}")
         totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + charges[0].coutTotalCharges()
         
 
@@ -303,6 +308,7 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
             'infrastructures': infrastructures[0],
             'totalAlevin': totalAlevin,
             'totalRation': totalRation,
+            'totalRecolte': totalRecolte,
             #'charges': charges[0],
             'autresCharges': intcomma(charges[0].coutTotalCharges()),
             'totalCharges': intcomma(totalCharge)
