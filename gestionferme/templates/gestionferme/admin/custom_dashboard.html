@@ -103,8 +103,8 @@
             <ul class="sidebar-menu">
                  {% comment %} <!--<li><i class="fas fa-home"></i><a href="{% url 'app:link_name' args=(variable, another_variable) %}"></a> Accueil</li>--> {% endcomment %}
                  <a href="{% url 'admin:index' %}"> <li style="color: white;"><i class="fas fa-home"></i> Accueil  </li></a>
-                <li><i class="fas fa-chart-line"></i> Statistiques</li>
-                <li><i class="fas fa-users"></i> Utilisateurs</li>
+                 {% comment %}<li><i class="fas fa-chart-line"></i> Statistiques</li>
+                <li><i class="fas fa-users"></i> Utilisateurs</li>{% endcomment %}
                 <li><i class="fas fa-cog"></i> Paramètres</li>
             </ul>
         </div> 
@@ -236,15 +236,14 @@
         new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Google', 'Apple', 'Facebook', 'Amazon'],
+                labels: ['Tilapia', 'Clarias', 'Autres'],
                 datasets: [{
                     label: 'Partage de Marché',
-                    data: [25, 35, 30, 27],
+                    data: [25, 35, 30],
                     backgroundColor: [
                         '#3498db',
                         '#e74c3c',
                         '#2ecc71',
-                        '#9b59b6'
                     ]
                 }]
             },

@@ -20,7 +20,7 @@ from gestionferme.views import custom_dashboard
 
 urlpatterns = [
     path('admin/dashboard/', custom_dashboard, name='custom_dashboard'),
-
     path('admin/', admin.site.urls),
+    path('', custom_dashboard, name='custom_dashboard'),
     path('pdf/pisciculture/', include('gestionferme.urls')),
 ]

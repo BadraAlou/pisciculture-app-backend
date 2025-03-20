@@ -299,7 +299,13 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
         # print(f"Yo Recette - nbre Tilapia : {totalRecolte['data']['vente']['tilapia']['bassin_en_ciment']}")
         print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['tilapia']['bassin_en_ciment']}")
         print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['couts']['tilapia']['bassin_en_ciment']}")
-        totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + charges[0].coutTotalCharges()
+
+        try:
+            montant_charges = charges[0].coutTotalCharges()
+        except:
+            montant_charges = 0
+        #totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + charges[0].coutTotalCharges()
+        totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + montant_charges
         
 
         context = {
@@ -310,7 +316,8 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
             'totalRation': totalRation,
             'totalRecolte': totalRecolte,
             #'charges': charges[0],
-            'autresCharges': intcomma(charges[0].coutTotalCharges()),
+            #'autresCharges': intcomma(charges[0].coutTotalCharges()),
+            'autresCharges': intcomma(montant_charges),
             'totalCharges': intcomma(totalCharge)
         }
         #html_string = render_to_string('gestionferme/pisciculture_template.html', context)
