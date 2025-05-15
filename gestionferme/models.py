@@ -755,6 +755,7 @@ class Alevin(models.Model):
     poidsMoyenClaria = models.PositiveIntegerField(verbose_name="Poids Moyen Claria", default=0)
     poidsMoyenAutres = models.PositiveIntegerField(verbose_name="Poids Moyen Autres", default=0)
 
+
     def __str__(self):
         return super().__str__()
     
