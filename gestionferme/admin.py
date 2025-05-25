@@ -38,6 +38,7 @@ class RationJournaliereTabularInline(TabularInline):
     #list_display = ["date", "etudiant", "evaluation"]
     extra = 0 
     #tab = True
+    readonly_fields = ('quantite_ration',)
     # fieldsets = (
 
     #     (
@@ -76,6 +77,8 @@ class AlevinTabularInline(TabularInline):
     #per_page = 1
     extra = 0
     #tab = True
+    readonly_fields = ('biomasse_tilapia', 'biomasse_claria', 'biomasse_autres')
+    
 
 
 class RecolteTabularInline(TabularInline):
@@ -382,6 +385,7 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
     #list_display    = ['nom', 'aliment1', 'aliment2', 'aliment3', 'aliment4', 'aliment5']
     list_display    = ['aliment1', 'aliment2', 'aliment3', 'aliment4', 'aliment5']
     #search_fields     = ('nom',)
+    readonly_fields = ('quantite_ration',)
 
     fieldsets = (
 
@@ -415,6 +419,7 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
 class AlevinAdminClass(ImportExportModelAdmin, ModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
+    readonly_fields = ('biomasse_tilapia', 'biomasse_claria', 'biomasse_autres')
      #list_fullwidth = True 
     warn_unsaved_form    = True 
     list_display   = ['cycleProduction', 'nombreTilapia', 'nombreClaria',  'nombreAutres',]

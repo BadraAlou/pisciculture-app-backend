@@ -745,16 +745,31 @@ class Alevin(models.Model):
     remplaceMortaliteClaria = models.PositiveIntegerField(verbose_name="Remplace Mortalité Claria", default=0)
     remplaceMortaliteAutres = models.PositiveIntegerField(verbose_name="Remplace Mortalité Autres", default=0)
 
-    # biomasse
-    biomasseTilapia = models.PositiveIntegerField(verbose_name="Biomasse Tilapia", default=0)
-    biomasseClaria = models.PositiveIntegerField(verbose_name="Biomasse Claria", default=0)
-    biomasseAutres = models.PositiveIntegerField(verbose_name="Biomasse Autres", default=0)
+    # # biomasse
+    # biomasseTilapia = models.PositiveIntegerField(verbose_name="Biomasse Tilapia", default=0)
+    # biomasseClaria = models.PositiveIntegerField(verbose_name="Biomasse Claria", default=0)
+    # biomasseAutres = models.PositiveIntegerField(verbose_name="Biomasse Autres", default=0)
 
     # poids moyen
     poidsMoyenTilapia = models.PositiveIntegerField(verbose_name="Poids Moyen Tilapia", default=0)
     poidsMoyenClaria = models.PositiveIntegerField(verbose_name="Poids Moyen Claria", default=0)
     poidsMoyenAutres = models.PositiveIntegerField(verbose_name="Poids Moyen Autres", default=0)
 
+
+    @property
+    def biomasse_tilapia(self):
+        # Valeur Arondi
+        return round(((self.nombreTilapia - self.mortaliteTilapia + self.remplaceMortaliteTilapia) * self.poidsMoyenTilapia) / 1000, 2)
+        # Valeur Normale(sans arondi)
+        #return ((self.nombreTilapia - self.mortaliteTilapia + self.remplaceMortaliteTilapia) * self.poidsMoyenTilapia) / 1000
+
+    @property
+    def biomasse_claria(self):
+        return round(((self.nombreClaria - self.mortaliteClaria + self.remplaceMortaliteClaria) * self.poidsMoyenClaria) / 1000, 2)
+
+    @property
+    def biomasse_autres(self):
+        return round(((self.nombreAutres - self.mortaliteAutres + self.remplaceMortaliteAutres) * self.poidsMoyenAutres) / 1000, 2)
 
     def __str__(self):
         return super().__str__()
@@ -842,6 +857,41 @@ class RationJournaliere(models.Model):
     prixProduit2 = models.PositiveIntegerField(verbose_name="Prix Produit 2", default=0)
     produit3 = models.FloatField(verbose_name="Produit 3", default=0, blank=True)
     prixProduit3 = models.PositiveIntegerField(verbose_name="Prix Produit 3", default=0)
+
+    @property
+    def quantite_ration(self):
+        # On récupère l'alevin lié au même cycleProduction et infrastructure
+        alevin = Alevin.objects.filter(
+            cycleProduction=self.cycleProduction,
+            infrastructure=self.infrastructure
+        ).first()
+
+        if not alevin:
+            return 0.0
+
+        biomasse_totale = (
+            alevin.biomasse_tilapia +
+            alevin.biomasse_claria +
+            alevin.biomasse_autres
+        )
+        print(f'*** biomasse totale : {biomasse_totale * 0.06}')
+        #return round(biomasse_totale * 0.06, 2)  # 6% de la biomasse totale
+        return biomasse_totale * 0.06  # 6% de la biomasse totale
+
+
+    # @property
+    # def quantite_ration(self):
+    #     alevins = Alevin.objects.filter(
+    #         cycleProduction=self.cycleProduction,
+    #         infrastructure=self.infrastructure
+    #     )
+
+    #     total_biomasse = 0
+    #     for a in alevins:
+    #         total_biomasse += a.biomasse_tilapia + a.biomasse_claria + a.biomasse_autres
+
+    #     print(f'*** biomasse totale 2 : {total_biomasse * 0.06}')
+    #     return round(total_biomasse * 0.06, 2)
 
     #Cette fonction affiche le nom du cycle de production
     def __str__(self):

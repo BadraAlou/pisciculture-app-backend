@@ -9,6 +9,7 @@ def create_related_objects(sender, instance, created, **kwargs):
         Alevin.objects.create(
             cycleProduction=instance.cycleProduction,
             infrastructure=instance,
+            
         )
         
         # Création d'un objet RationJournaliere associé
