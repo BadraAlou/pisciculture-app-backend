@@ -5,6 +5,7 @@ cssselect2==0.7.0
 diff-match-patch==20241021
 Django==5.1.2
 django-import-export==4.2.0
+django-nested-admin==4.1.1
 django-unfold==0.40.0
 django-weasyprint==2.3.0
 et_xmlfile==2.0.0
@@ -16,6 +17,7 @@ pycparser==2.22
 pydyf==0.11.0
 pyphen==0.15.0
 python-decouple==3.8
+python-monkey-business==1.1.0
 sqlparse==0.5.1
 tablib==3.7.0
 tinycss2==1.4.0
