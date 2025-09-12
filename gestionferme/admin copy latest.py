@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.decorators import action  # Import @action decorator from Unfold
 
 
-
+ 
 from import_export.admin import ImportExportModelAdmin
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.import_export.forms import ExportForm, ImportForm, SelectableFieldsExportForm
@@ -19,13 +19,120 @@ from unfold.contrib.filters.admin import (
 
 from django.db import models
 from unfold.contrib.forms.widgets import WysiwygWidget
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
 # Register your models here.
 from .models import *
 
-admin.site.unregister(User)
+#admin.site.unregister(User)
 admin.site.unregister(Group)
+
+ 
+
+
+# class CustomUserAdmin(BaseUserAdmin):
+#     add_form = CustomUserCreationForm
+#     form = CustomUserChangeForm
+#     model = CustomUser
+
+#     # Champs affichés dans la liste des utilisateurs
+#     list_display = ('email', 'telephone', 'is_staff', 'is_active',)
+#     #list_filter = ('is_staff', 'is_active', 'user_type')
+#     list_filter = ('is_staff', 'is_active', )
+
+#     # Champs à utiliser dans les formulaires d'ajout
+#     add_fieldsets = (
+#         # (None, {
+#         #     'classes': ('wide',),
+#         #     'fields': ('email', 'telephone', 'password1', 'password2', 'is_staff', 'is_active')}
+#         # ),
+
+#         (None, {
+#             'classes': ('wide',),
+#             'fields': ('email', 'telephone', 'password', 'password2')
+#             }),
+#         #(_('Informations'), {'fields': ('email', 'telephone', 'password', )}),
+#         #(_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+#         (_('Permissions'), {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),
+        
+#     )
+
+#     # Champs à utiliser dans les formulaires de modification
+#     fieldsets = (
+#         (None, {'fields': ('email', 'telephone', 'password')}),
+#         (_('Permissions'), {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),
+#         (_('Important dates'), {'fields': ('last_login', )}),
+#     )
+
+#     search_fields = ('email', 'telephone')
+#     ordering = ('email',)
+
+
+class CustomUserAdmin(BaseUserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+
+    list_display = ('email', 'telephone', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
+
+    fieldsets = (
+        (None, {'fields': ('email', 'telephone', 'password')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Dates', {'fields': ('last_login',)}),
+    )
+
+    # ❗ C'est ici que l'admin attendait un champ username : on le remplace
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'telephone', 'password1', 'password2', 'is_staff', 'is_active')}
+        ),
+    )
+
+    search_fields = ('email', 'telephone')
+    ordering = ('email',)
+
+
+
+#admin.site.unregister(CustomUser)
+#admin.site.register(CustomUser, CustomUserAdmin)
+#admin.site.register(Pisciculteur)
+
+
+class RegionInline(TabularInline):
+    model = Region
+    extra = 1
+    show_change_link = True
+
+class CercleInline(TabularInline):
+    model = Cercle
+    extra = 1
+    show_change_link = True
+
+class CommuneInline(TabularInline):
+    model = Commune
+    extra = 1
+    show_change_link = True
+
+class VilleInline(TabularInline):
+    model = Ville
+    extra = 1
+    show_change_link = True
+
+class QuartierInline(TabularInline):
+    model = Quartier
+    extra = 1
+    show_change_link = True
+
+
+class PisciculteurInline(TabularInline):
+    model = Pisciculteur
+    extra = 1
+    show_change_link = True
+    readonly_fields = ('user',)
+
 
 
 class RationJournaliereTabularInline(TabularInline):
@@ -34,6 +141,7 @@ class RationJournaliereTabularInline(TabularInline):
     #list_display = ["date", "etudiant", "evaluation"]
     extra = 0 
     #tab = True
+    readonly_fields = ('quantite_ration',)
     # fieldsets = (
 
     #     (
@@ -72,6 +180,8 @@ class AlevinTabularInline(TabularInline):
     #per_page = 1
     extra = 0
     #tab = True
+    readonly_fields = ('biomasse_tilapia', 'biomasse_claria', 'biomasse_autres')
+    
 
 
 class RecolteTabularInline(TabularInline):
@@ -100,6 +210,12 @@ class FermeTabularInline(TabularInline):
     #tab = True
 
 
+class ChargeTabularInline(TabularInline):
+    model = Charge
+    show_change_link = True
+    extra = 0
+
+
 
 
 @admin.register(Pisciculteur)
@@ -114,13 +230,26 @@ class PisciculteurAdminClass(ImportExportModelAdmin, ModelAdmin):
     actions = []
 
     warn_unsaved_form = True 
-    list_display = ['matricule', 'nom', 'prenom', 'genre', 'telephone', 'adresse', 'email']
-    list_filter = [('matricule', FieldTextFilter), ('nom', FieldTextFilter), ('prenom', FieldTextFilter)]
+    list_display = ['matricule', 'nom', 'prenom', 'genre', 'adresse']
+    list_filter = [('matricule', FieldTextFilter), ('nom', FieldTextFilter), ('prenom', FieldTextFilter), 
+    ('quartier', RelatedDropdownFilter), ('quartier__ville', RelatedDropdownFilter), ('quartier__ville__commune', RelatedDropdownFilter),
+    ('quartier__ville__commune__cercle', RelatedDropdownFilter), ('quartier__ville__commune__cercle__region', RelatedDropdownFilter),
+    ('quartier__ville__commune__cercle__region__pays', RelatedDropdownFilter)]
                 #    ('etudiant', RelatedDropdownFilter), ('etudiant__genre', ChoicesDropdownFilter), ('evaluation', FieldTextFilter),
                 #    ('python', RangeNumericFilter), ('oracle', RangeNumericFilter,), ('java', RangeNumericFilter), 
                 #     ('ccna', RangeNumericFilter) ]
-    search_fields = ('nom', 'prenom' ,'matricule', 'email', 'telephone')
+    search_fields = ('nom', 'prenom' ,'matricule', 'adresse')
 
+
+
+class ControlleurAdminClass(ImportExportModelAdmin, ModelAdmin):
+    import_form_class = ImportForm
+    export_form_class = ExportForm
+
+    list_filter_submit = True
+ 
+    warn_unsaved_form = True 
+    list_display = ['nom', 'prenom', 'adresse']
 
 
 @admin.register(Zone)
@@ -211,49 +340,55 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
     inlines = [InfrastructureTabularInline ,AlevinTabularInline, RationJournaliereTabularInline,
-                PecheControleTabularInline, RecolteTabularInline ]
+                PecheControleTabularInline, RecolteTabularInline, ChargeTabularInline ]
     
     #list_fullwidth = True 
     warn_unsaved_form    = True 
-    list_display   = ['date', 'nom', 'ferme', 'pdf_link']
+    list_display   = ['nom', 'ferme','cycle', 'pdf_rapport_infrastructure', 'pdf_bilan_financier']
     search_fields   = ('nom',)
 
-    def pdf_link(self, obj):
-        url = reverse('admin:cycleproduction_cycleproduction_pdf', args=[obj.id])
-        return format_html('<a href="{}">Télécharger le PDF</a>', url)
+    def pdf_rapport_infrastructure(self, obj):
+        url = reverse('admin:cycleproduction_infrastructure_pdf', args=[obj.id])
+        return format_html('<a href="{}">Télecharger</a>', url)
 
-    pdf_link.short_description = "Générer PDF"
+    pdf_rapport_infrastructure.short_description = "Rapport Infrast."
+
+    def pdf_bilan_financier(self, obj):
+        url = reverse('admin:cycleproduction_bilan_financier_pdf', args=[obj.id])
+        return format_html('<a href="{}">Télecharger</a>', url)
+
+    pdf_bilan_financier.short_description = "Bilan Financier"
 
     # Ajout de l'URL pour la génération du PDF dans l'admin
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
-            path('<int:cycle_id>/pdf/', self.admin_site.admin_view(self.generate_pdf), name='cycleproduction_cycleproduction_pdf'),
+            path('<int:cycle_id>/bilan_infrastrucre/', self.admin_site.admin_view(self.generate_bilan_infras_pdf), name='cycleproduction_infrastructure_pdf'),
+            path('<int:cycle_id>/bilan_financier/', self.admin_site.admin_view(self.rapport_financier_ferme_pdf), name='cycleproduction_bilan_financier_pdf'),
         ]
         return custom_urls + urls
+    
+
 
     # Vue qui génère le PDF
-    def generate_pdf(self, request, cycle_id):
+    def generate_bilan_infras_pdf(self, request, cycle_id):
         cycle = CycleProduction.objects.get(pk=cycle_id)
         infrastructures = cycle.infrastructure_set.all()
         alevins = Alevin.objects.filter(cycleProduction__id=cycle_id)
-        print("# Yo les alevins ")
-        for a in alevins:
-            print(a.nombreTilapia)
-            print(a.nombreClaria)
-            print(a.nombreAutres)
-
-        #print(f"# yo infra : {infrastructures}")
-        infraList = []
-        for infra in infrastructures:
-            #print(f'### Yo infra : {infra.typeInfrastructure}')
-            infraList.append(infra)
-        #print(infraList[0])
+        rationJournalieres = RationJournaliere.objects.filter(cycleProduction__id=cycle_id)
+        pecheControles = PecheControle.objects.filter(cycleProduction__id=cycle_id)
+        recoltes = Recolte.objects.filter(cycleProduction__id=cycle_id)
+        charges = Charge.objects.filter(cycleProduction__id=cycle_id)
         
         context = {
             'cycle': cycle,
             #'infrastructures': infrastructures,
-            'infrastructures': infraList[0],
+            'infrastructures': infrastructures[0],
+            'alevin': alevins[0],
+            'rationJournaliere': rationJournalieres[0],
+            'pecheControle': pecheControles[0],
+            'recolte': recoltes[0],
+            'charge': charges[0],
         }
         #html_string = render_to_string('gestionferme/pisciculture_template.html', context)
         html_string = render_to_string('gestionferme/bilan_cycle_pisciculteur.html', context)
@@ -261,6 +396,55 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
 
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="Pisciculture_{cycle.nom}.pdf"'
+        html.write_pdf(response)
+        return response
+    
+    def rapport_financier_ferme_pdf(self, request, cycle_id):
+        cycle = CycleProduction.objects.get(pk=cycle_id)
+        infrastructures = cycle.infrastructure_set.all()
+        charges = Charge.objects.filter(cycleProduction__id=cycle_id)
+        #print("*** Yo charge : ", charges[0].eau)
+        
+
+        totalAlevin = cycle.get_production_summary()
+        totalRation = cycle.get_ration_journaliere_summary()
+        totalRecolte = cycle.get_recolte_summary()
+        #print(f'Yo total ration : {totalRation}')
+        #print(f'Yo total recolte : {totalRecolte}')
+        
+        totalAlevin.calculer_totaux()
+        totalRation.calculer_totaux()
+        totalRecolte.calculer_totaux()
+        # print(f"Yo Recette - nbre Tilapia : {totalRecolte['data']['vente']['tilapia']['bassin_en_ciment']}")
+        print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['tilapia']['bassin_en_ciment']}")
+        print(f"Yo Recette - nbre Tilapia : {totalRecolte.data['vente']['couts']['tilapia']['bassin_en_ciment']}")
+
+        try:
+            montant_charges = charges[0].coutTotalCharges()
+        except:
+            montant_charges = 0
+        #totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + charges[0].coutTotalCharges()
+        totalCharge = totalAlevin.cout_total + totalRation.cout_total + totalRation.cout_total_prod + montant_charges
+        
+
+        context = {
+            'cycle': cycle,
+            #'infrastructures': infrastructures,
+            'infrastructures': infrastructures[0],
+            'totalAlevin': totalAlevin,
+            'totalRation': totalRation,
+            'totalRecolte': totalRecolte,
+            #'charges': charges[0],
+            #'autresCharges': intcomma(charges[0].coutTotalCharges()),
+            'autresCharges': intcomma(montant_charges),
+            'totalCharges': intcomma(totalCharge)
+        }
+        #html_string = render_to_string('gestionferme/pisciculture_template.html', context)
+        html_string = render_to_string('gestionferme/rapport_financier_ferme.html', context)
+        html = HTML(string=html_string)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="Rapport_Financier_Ferme_{cycle.nom}.pdf"'
         html.write_pdf(response)
         return response
     
@@ -288,7 +472,6 @@ class CycleProductionAdminClass(ImportExportModelAdmin, ModelAdmin):
 
             # Ajouter un message de succès dans l'interface d'administration
             #self.message_user(request, message, messages.SUCCESS)
-            
             return response
 
     export_selected_cycles_to_pdf.short_description = "Exporter en PDF les cycles sélectionnés"
@@ -315,8 +498,10 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
     export_form_class = ExportForm
     #list_fullwidth = True 
     warn_unsaved_form      = True 
-    list_display    = ['nom', 'aliment1', 'aliment2', 'aliment3', 'aliment4', 'aliment5']
-    search_fields     = ('nom',)
+    #list_display    = ['nom', 'aliment1', 'aliment2', 'aliment3', 'aliment4', 'aliment5']
+    list_display    = ['aliment1', 'aliment2', 'aliment3', 'aliment4', 'aliment5']
+    #search_fields     = ('nom',)
+    readonly_fields = ('quantite_ration',)
 
     fieldsets = (
 
@@ -325,7 +510,9 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
                   {
                       "classes": ["tab"],
                       "fields": [
-                          "aliment1", "aliment2", "aliment3", "aliment4", "aliment5"
+                          ("aliment1", "prixAliment1"), ("aliment2", "prixAliment2"),
+                          ("aliment3", "prixAliment3"), ("aliment4", "prixAliment4"),
+                          ("aliment5", "prixAliment5")
                       ],
                   },
         ),
@@ -335,7 +522,8 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
                   {
                       "classes": ["tab"],
                       "fields": [
-                          "produit1", "produit2"
+                          ("produit1", "prixProduit1"), ("produit2", "prixProduit2"),
+                          ("produit3", "prixProduit3")
                       ],
                   },
         ),
@@ -347,6 +535,7 @@ class RationJournaliereAdminClass(ImportExportModelAdmin, ModelAdmin):
 class AlevinAdminClass(ImportExportModelAdmin, ModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
+    readonly_fields = ('biomasse_tilapia', 'biomasse_claria', 'biomasse_autres')
      #list_fullwidth = True 
     warn_unsaved_form    = True 
     list_display   = ['cycleProduction', 'nombreTilapia', 'nombreClaria',  'nombreAutres',]
@@ -442,6 +631,8 @@ class AlevinAdminClass(ImportExportModelAdmin, ModelAdmin):
     )
 
 
+
+
 @admin.register(Recolte)
 class RecolteAdmin(ModelAdmin):
     import_form_class = ImportForm
@@ -494,6 +685,45 @@ class RecolteAdmin(ModelAdmin):
 
 
 
+@admin.register(Aliment)
+class AlimentAdminClass(ImportExportModelAdmin, ModelAdmin):
+    warn_unsaved_form      = True 
+    list_display    = ['nom', 'quantite', 'prix']
+
+@admin.register(Produit)
+class ProduitAdminClass(ImportExportModelAdmin, ModelAdmin):
+    list_display    = ['nom', 'quantite', 'prix']
+
+    
+@admin.register(Pays)
+class PaysAdmin(ModelAdmin):
+    inlines = [RegionInline]
+
+@admin.register(Region)
+class RegionAdmin(ModelAdmin):
+    inlines = [CercleInline]
+
+@admin.register(Cercle)
+class CercleAdmin(ModelAdmin):
+    inlines = [CommuneInline]
+
+@admin.register(Commune)
+class CommuneAdmin(ModelAdmin):
+    inlines = [VilleInline]
+
+@admin.register(Ville)
+class VilleAdmin(ModelAdmin):
+    inlines = [QuartierInline]
+
+@admin.register(Quartier)
+class QuartierAdmin(ModelAdmin):
+    pass
+
+@admin.register(AgentEncadrement)
+class AgentEncadrementAdminClass(ImportExportModelAdmin, ModelAdmin):
+    list_display    = ['nom', 'prenom', 'adresse']
+    inlines = [PisciculteurInline]
+
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
@@ -504,7 +734,14 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
+@admin.register(CustomUser)
+class CustomUserAdmin(CustomUserAdmin, ModelAdmin):
+    pass
 
+
+@admin.register(Controlleur)
+class ControlleurAdmin(ControlleurAdminClass, ModelAdmin):
+    pass
 
 # admin.py
 from django.contrib import admin

@@ -1505,17 +1505,7 @@ class Charge(models.Model):
 class RationJournaliere(models.Model):
     cycleProduction = models.ForeignKey(CycleProduction, on_delete=models.CASCADE)
     infrastructure = models.ForeignKey(Infrastructure, on_delete=models.CASCADE, blank=True, null=True)
-    
-    nom = models.CharField(max_length=50, verbose_name="Nom Ration Journalière", blank=True)
-    aliment1 = models.FloatField(verbose_name="Aliment 1", default=0)
-    aliment2 = models.FloatField(verbose_name="Aliment 2", default=0)
-    aliment3 = models.FloatField(verbose_name="Aliment 3", default=0)
-    aliment4 = models.FloatField(verbose_name="Aliment 4", default=0)
-    aliment5 = models.FloatField(verbose_name="Aliment 5", default=0)
-    produit1 = models.FloatField(verbose_name="Produit 1", default=0, blank=True)
-    produit2 = models.FloatField(verbose_name="Produit 2", default=0, blank=True)
-    produit3 = models.FloatField(verbose_name="Produit 3", default=0, blank=True)
-    
+    #nom = models.CharField(max_length=50, verbose_name="Nom Ration Journalière", blank=True)
     taux_ration_cycle1 = models.FloatField(verbose_name="Taux Ration C1", default=0)
     taux_ration_cycle2 = models.FloatField(verbose_name="Taux Ration C2", default=0)
     taux_ration_cycle3 = models.FloatField(verbose_name="Taux Ration C3", default=0)
@@ -1693,10 +1683,6 @@ class RationJournaliere(models.Model):
 
 
         return (self.taux_ration_cycle6 * pecheControle.biomasse_6) 
-
-    # @property
-    # def aliment1(self):
-    #     return 100
 
     def __str__(self):
         return 'Ration Journalière'

@@ -1505,45 +1505,32 @@ class Charge(models.Model):
 class RationJournaliere(models.Model):
     cycleProduction = models.ForeignKey(CycleProduction, on_delete=models.CASCADE)
     infrastructure = models.ForeignKey(Infrastructure, on_delete=models.CASCADE, blank=True, null=True)
+    #nom = models.CharField(max_length=50, verbose_name="Nom Ration Journalière", blank=True)
+    taux_ration = models.FloatField(verbose_name="Taux Ration", default=0)
     
-    nom = models.CharField(max_length=50, verbose_name="Nom Ration Journalière", blank=True)
-    aliment1 = models.FloatField(verbose_name="Aliment 1", default=0)
-    aliment2 = models.FloatField(verbose_name="Aliment 2", default=0)
-    aliment3 = models.FloatField(verbose_name="Aliment 3", default=0)
-    aliment4 = models.FloatField(verbose_name="Aliment 4", default=0)
-    aliment5 = models.FloatField(verbose_name="Aliment 5", default=0)
-    produit1 = models.FloatField(verbose_name="Produit 1", default=0, blank=True)
-    produit2 = models.FloatField(verbose_name="Produit 2", default=0, blank=True)
-    produit3 = models.FloatField(verbose_name="Produit 3", default=0, blank=True)
-    
-    taux_ration_cycle1 = models.FloatField(verbose_name="Taux Ration C1", default=0)
-    taux_ration_cycle2 = models.FloatField(verbose_name="Taux Ration C2", default=0)
-    taux_ration_cycle3 = models.FloatField(verbose_name="Taux Ration C3", default=0)
-    taux_ration_cycle4 = models.FloatField(verbose_name="Taux Ration C4", default=0)
-    taux_ration_cycle5 = models.FloatField(verbose_name="Taux Ration C5", default=0)
-    taux_ration_cycle6 = models.FloatField(verbose_name="Taux Ration C6", default=0)
-    
+    is_aliment1 = models.BooleanField(verbose_name="Aliment1 ?", default=False)
     prixAliment1 = models.PositiveIntegerField(verbose_name="Prix Aliment1", default=0)
+    
+    is_aliment2 = models.BooleanField(verbose_name="Aliment2 ?", default=False)
     prixAliment2 = models.PositiveIntegerField(verbose_name="Prix Aliment2", default=0)
+    
+    is_aliment3 = models.BooleanField(verbose_name="Aliment3 ?", default=False)
     prixAliment3 = models.PositiveIntegerField(verbose_name="Prix Aliment3", default=0)
+    
+    is_aliment4 = models.BooleanField(verbose_name="Aliment4 ?", default=False)
     prixAliment4 = models.PositiveIntegerField(verbose_name="Prix Aliment4", default=0)
+    
+    is_aliment5 = models.BooleanField(verbose_name="Aliment5 ?", default=False)
     prixAliment5 = models.PositiveIntegerField(verbose_name="Prix Aliment5", default=0)
     
+    is_produit1 = models.BooleanField(verbose_name="Produit1 ?", default=False)
     prixProduit1 = models.PositiveIntegerField(verbose_name="Prix Produit1", default=0)
+    
+    is_produit2 = models.BooleanField(verbose_name="Produit2 ?", default=False)
     prixProduit2 = models.PositiveIntegerField(verbose_name="Prix Produit2", default=0)
+    
+    is_produit3 = models.BooleanField(verbose_name="Produit3 ?", default=False)
     prixProduit3 = models.PositiveIntegerField(verbose_name="Prix Produit3", default=0)
-    
-    is_aliment1_cycle1 = models.BooleanField(verbose_name="Aliment1 C1 ?", default=False)
-    is_aliment2_cycle1 = models.BooleanField(verbose_name="Aliment2 C1 ?", default=False)
-    is_aliment3_cycle1 = models.BooleanField(verbose_name="Aliment3 C1 ?", default=False)
-    is_aliment4_cycle1 = models.BooleanField(verbose_name="Aliment4 C1 ?", default=False)
-    is_aliment5_cycle1 = models.BooleanField(verbose_name="Aliment5 C1 ?", default=False)
-    
-    is_produit1_cycle1 = models.BooleanField(verbose_name="Produit1 C1 ?", default=False)
-    is_produit2_cycle1 = models.BooleanField(verbose_name="Produit2 C1 ?", default=False)
-    is_produit3_cycle1 = models.BooleanField(verbose_name="Produit3 C1 ?", default=False)
-
-
 
     is_aliment1_cycle2 = models.BooleanField(verbose_name="Aliment1 C2 ?", default=False)
     is_aliment2_cycle2 = models.BooleanField(verbose_name="Aliment2 C2 ?", default=False)
@@ -1597,9 +1584,10 @@ class RationJournaliere(models.Model):
 
     
     @property
-    def quantite_ration_cycle1(self):
+    def quantite_ration(self):
+        
+        return 5
         # On récupère l'alevin lié au même cycleProduction et infrastructure
-        print("### Qte ration cycle 1")
         alevin = Alevin.objects.filter(
             cycleProduction=self.cycleProduction,
             infrastructure=self.infrastructure
@@ -1617,16 +1605,110 @@ class RationJournaliere(models.Model):
         #return round(biomasse_totale * 0.06, 2)  # 6% de la biomasse totale
         return biomasse_totale * self.taux_ration  
 
+    @property
+    def aliment1(self):
+        if self.is_aliment1:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment2(self):
+        if self.is_aliment2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment3(self):
+        if self.is_aliment3:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment4(self):
+        if self.is_aliment4:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment5(self):
+        if self.is_aliment5:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit1(self):
+        if self.is_produit1:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit2(self):
+        if self.is_produit2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit3(self):
+        if self.is_produit3:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment1_cycle2(self):
+        if self.is_aliment1_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+
+    @property
+    def aliment2_cycle2(self):
+        if self.is_aliment2_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment3_cycle2(self):
+        if self.is_aliment3_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment4_cycle2(self):
+        if self.is_aliment4_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def aliment5_cycle2(self):
+        if self.is_aliment5_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit1_cycle2(self):
+        if self.is_produit1_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit2_cycle2(self):
+        if self.is_produit2_cycle2:
+            return self.quantite_ration
+        return 0.0
+
+    @property
+    def produit3_cycle2(self):
+        if self.is_produit3_cycle2:
+            return self.quantite_ration
+        return 0.0
     
     @property
-    def quantite_ration_cycle2(self):
-        print("### Qte ration cycle 2")
+    def quantite_ration2(self):
         pecheControle = PecheControle.objects.filter(
             cycleProduction=self.cycleProduction,
             infrastructure=self.infrastructure
         ).first()
 
-        print('### Yo Pêche de controle', pecheControle)
         if not pecheControle:
             return 0.0
 
@@ -1635,68 +1717,11 @@ class RationJournaliere(models.Model):
             infrastructure=self.infrastructure
         ).first()
 
-        print('### Yo Alevin', alevin)
         if not alevin:
             return 0.0
-            
-        print('### Yo final qte :', ((alevin.nombreTilapia - alevin.mortaliteTilapia + alevin.remplaceMortaliteTilapia) * pecheControle.poids_moyen) / 1000 * 0.03)
+    
         return  ((alevin.nombreTilapia - alevin.mortaliteTilapia + alevin.remplaceMortaliteTilapia) * pecheControle.poids_moyen) / 1000 * 0.03
 
-    @property
-    def quantite_ration_cycle3(self):
-        pecheControle = PecheControle.objects.filter(
-            cycleProduction=self.cycleProduction,
-            infrastructure=self.infrastructure
-        ).first()
-
-        if not pecheControle:
-            return 0.0
-
-
-        return (self.taux_ration_cycle3 * pecheControle.biomasse_3) 
-
-    @property
-    def quantite_ration_cycle4(self):
-        pecheControle = PecheControle.objects.filter(
-            cycleProduction=self.cycleProduction,
-            infrastructure=self.infrastructure
-        ).first()
-
-        if not pecheControle:
-            return 0.0
-
-
-        return (self.taux_ration_cycle4 * pecheControle.biomasse_4) 
-
-    @property
-    def quantite_ration_cycle5(self):
-        pecheControle = PecheControle.objects.filter(
-            cycleProduction=self.cycleProduction,
-            infrastructure=self.infrastructure
-        ).first()
-
-        if not pecheControle:
-            return 0.0
-
-
-        return (self.taux_ration_cycle5 * pecheControle.biomasse_5) 
-
-    @property
-    def quantite_ration_cycle6(self):
-        pecheControle = PecheControle.objects.filter(
-            cycleProduction=self.cycleProduction,
-            infrastructure=self.infrastructure
-        ).first()
-
-        if not pecheControle:
-            return 0.0
-
-
-        return (self.taux_ration_cycle6 * pecheControle.biomasse_6) 
-
-    # @property
-    # def aliment1(self):
-    #     return 100
 
     def __str__(self):
         return 'Ration Journalière'

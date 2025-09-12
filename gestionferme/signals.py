@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Infrastructure, Alevin, RationJournaliere, PecheControle, Recolte
+from .models import Infrastructure, Alevin, RationJournaliere, PecheControle, Recolte, Charge
 
 @receiver(post_save, sender=Infrastructure)
 def create_related_objects(sender, instance, created, **kwargs):
@@ -29,3 +29,9 @@ def create_related_objects(sender, instance, created, **kwargs):
             cycleProduction=instance.cycleProduction,
             infrastructure=instance,
         )
+
+        # Création d'un objet Charges une seule fois par cycleProduction
+        if not Charge.objects.filter(cycleProduction=instance.cycleProduction).exists():
+            Charge.objects.create(
+                cycleProduction=instance.cycleProduction
+            )

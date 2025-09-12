@@ -32,7 +32,7 @@ DEBUG = config('DEBUG')
 
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['31.207.34.42', 'localhost']
+ALLOWED_HOSTS = ['31.207.34.42', 'localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'import_export',
+    #'smart_selects',
+    #'nested_admin',
     'gestionferme'
 ]
 
@@ -87,6 +89,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'piscicultureproject.wsgi.application'
+
+
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -142,6 +147,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'gestionferme.CustomUser'
+AUTHENTICATION_BACKENDS = [
+    'gestionferme.backends.EmailOrPhoneBackend',  # Remplace 'gestionferme' par le nom réel de ton app
+    'django.contrib.auth.backends.ModelBackend',  # Garde aussi le backend par défaut
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -160,3 +170,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from import_export.formats.base_formats import CSV, XLSX, JSON
 IMPORT_FORMATS = [CSV, XLSX, JSON]
 EXPORT_FORMATS = [XLSX, CSV, JSON]
+
+#USE_DJANGO_JQUERY = True
