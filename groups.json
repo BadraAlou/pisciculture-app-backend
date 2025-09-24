@@ -1,0 +1,79 @@
+[
+{
+  "model": "auth.group",
+  "pk": 1,
+  "fields": {
+    "name": "Groupe Pisciculteur",
+    "permissions": [
+      24,
+      77,
+      78,
+      79,
+      80,
+      72,
+      29,
+      30,
+      31,
+      32,
+      37,
+      38,
+      39,
+      40,
+      81,
+      82,
+      83,
+      84,
+      89,
+      90,
+      91,
+      92,
+      48,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      56,
+      57,
+      58,
+      59,
+      60
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 2,
+  "fields": {
+    "name": "Groupe Agent Encadrement",
+    "permissions": [
+      88,
+      80,
+      32,
+      40,
+      84,
+      96,
+      100,
+      104
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "pk": 3,
+  "fields": {
+    "name": "Groupe Chef Secteur",
+    "permissions": [
+      84,
+      96,
+      100,
+      104,
+      56,
+      60
+    ]
+  }
+}
+]
