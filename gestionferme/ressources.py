@@ -1,7 +1,7 @@
 from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget
-from .models import Pisciculteur, Quartier, AgentEncadrement
-from .widgets import AgentEncadrementFullNameWidget
+from .models import Pisciculteur, Quartier, AgentEncadrement, Ferme
+from .widgets import AgentEncadrementFullNameWidget, PisciculteurFullNameWidget
 
 class PisciculteurResource(resources.ModelResource):
     quartier_nom = fields.Field(
@@ -20,6 +20,11 @@ class PisciculteurResource(resources.ModelResource):
         model = Pisciculteur
         fields = ('matricule', 'nom', 'prenom', 'genre', 'quartier_nom', 'agent_nom')
         export_order = ('matricule', 'nom', 'prenom', 'genre', 'quartier_nom', 'agent_nom')
+
+
+
+
+
 
 
 
@@ -46,6 +51,25 @@ class PisciculteurReadableResource(resources.ModelResource):
         fields = ('matricule', 'nom', 'prenom', 'genre', 'quartier', 'agent_encadrement')
         export_order = fields
 
+
+
+class FermeResource(resources.ModelResource):
+    quartier = fields.Field(
+        column_name='Quartier',
+        attribute='quartier',
+        widget=ForeignKeyWidget(Quartier, 'nom')
+    )
+    pisciculteur = fields.Field(
+        column_name='Pisciculteur',
+        attribute='pisciculteur',
+        #widget=ForeignKeyWidget(AgentEncadrement, 'nom')
+        widget=PisciculteurFullNameWidget(Pisciculteur, 'id')
+    )
+
+    class Meta:
+        model = Pisciculteur
+        fields = ('nom', 'quartier', 'pisciculteur', 'coordonnees')
+        export_order = fields
 
 
 

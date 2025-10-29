@@ -6,3 +6,11 @@ class AgentEncadrementFullNameWidget(ForeignKeyWidget):
         if value:
             return f"{value.nom} {value.prenom}"
         return ""
+
+class PisciculteurFullNameWidget(ForeignKeyWidget):
+    def render(self, value, obj=None):
+        if value:
+            return f"{value.nom} {value.prenom}({value.user.telephone})"
+        return ""
+    
+

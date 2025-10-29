@@ -284,7 +284,7 @@ class PisciculteurAdminClass(ImportExportModelAdmin, ModelAdmin):
     # Display changelist in fullwidth
     #list_fullwidth = False
     inlines = [FermeTabularInline ]
-    actions = []
+    #actions = []
 
     warn_unsaved_form = True 
     list_display = ['matricule', 'nom', 'prenom', 'genre', 'quartier']
@@ -315,10 +315,10 @@ class PisciculteurAdminClass(ImportExportModelAdmin, ModelAdmin):
         try:
             chef = request.user.chef_secteur_profile
             cercles = chef.cercles.all()
-            print(f'Yo les cercles : {cercles}')
-            print(qs.filter(
-                quartier__ville__commune__cercle__in=cercles
-            ))
+            # print(f'Yo les cercles : {cercles}')
+            # print(qs.filter(
+            #     quartier__ville__commune__cercle__in=cercles
+            # ))
 
             return qs.filter(
                 quartier__ville__commune__cercle__in=cercles
@@ -330,23 +330,23 @@ class PisciculteurAdminClass(ImportExportModelAdmin, ModelAdmin):
 
 
         # Ajoute des boutons dans la barre d'action
-    actions = ['export_raw', 'export_readable']
+    actions = ['export_readable']
 
-    def export_raw(self, request, queryset):
-        resource = PisciculteurRawResource()
-        dataset = resource.export(queryset)
-        response = HttpResponse(dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename="pisciculteurs_raw.xlsx"'
-        return response
-    export_raw.short_description = "Exporter (brut - ID)"
+    # def export_raw(self, request, queryset):
+    #     resource = PisciculteurRawResource()
+    #     dataset = resource.export(queryset)
+    #     response = HttpResponse(dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #     response['Content-Disposition'] = 'attachment; filename="pisciculteurs_raw.xlsx"'
+    #     return response
+    # export_raw.short_description = "Exporter (brut - ID)"
 
     def export_readable(self, request, queryset):
         resource = PisciculteurReadableResource()
         dataset = resource.export(queryset)
         response = HttpResponse(dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = 'attachment; filename="pisciculteurs_lisible.xlsx"'
+        response['Content-Disposition'] = 'attachment; filename="pisciculteurs.xlsx"'
         return response
-    export_readable.short_description = "Exporter (lisible - noms)"
+    export_readable.short_description = "Exporter les pisciculteurs (xlsx)"
 
 
 
@@ -376,12 +376,29 @@ class ControlleurAdminClass(ImportExportModelAdmin, ModelAdmin):
 class FermeAdminClass(ImportExportModelAdmin, ModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
+    resource_class = FermeResource
     inlines = [CycleProductionTabularInline, ]
     #list_fullwidth = True
     warn_unsaved_form  = True 
     list_display  = ['nom', 'quartier', 'pisciculteur']
-    list_filter  = [('nom', FieldTextFilter), ('quartier__nom', FieldTextFilter)]
+    list_filter_submit = True
+    list_filter  = [('nom', FieldTextFilter), 
+        ('quartier', RelatedDropdownFilter), ('quartier__ville', RelatedDropdownFilter), ('quartier__ville__commune', RelatedDropdownFilter),
+        ('quartier__ville__commune__cercle', RelatedDropdownFilter), ('quartier__ville__commune__cercle__region', RelatedDropdownFilter),
+        ('quartier__ville__commune__cercle__region__pays', RelatedDropdownFilter)
+    ]
     search_fields  =  ('nom', 'quartier__nom', 'pisciculteur__nom', 'pisciculteur__prenom')
+    actions = ['export_ferme_xlsx']
+
+    def export_ferme_xlsx(self, request, queryset):
+        resource = FermeResource()
+        dataset = resource.export(queryset)
+        response = HttpResponse(dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="fermes.xlsx"'
+        return response
+    export_ferme_xlsx.short_description = "Exporter les fermes(xlsx)"
+
+
 
 @admin.register(TypeInfrastructure)
 class TypeInfrastructureAdminClass(ImportExportModelAdmin, ModelAdmin):

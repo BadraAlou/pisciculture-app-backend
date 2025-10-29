@@ -1599,12 +1599,13 @@ class RationJournaliere(models.Model):
     @property
     def quantite_ration_cycle1(self):
         # On récupère l'alevin lié au même cycleProduction et infrastructure
-        print("### Qte ration cycle 1")
+        print("### Qte ration cycle 1: ")
         alevin = Alevin.objects.filter(
             cycleProduction=self.cycleProduction,
             infrastructure=self.infrastructure
         ).first()
 
+        print("*** Yo Alevin : ", alevin)
         if not alevin:
             return 0.0
 
